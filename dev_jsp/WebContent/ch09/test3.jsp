@@ -1,0 +1,77 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	String dap1 = request.getParameter("dap1");
+	String dap2 = request.getParameter("dap2");
+	String dap3 = request.getParameter("dap3");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>문제3</title>
+<%@include file="../common/JEasyUICommon.jsp"%>
+<script type="text/javascript">
+//멀티선택을 배제하기 위한 함수 선언
+	function answer(p_dap) {
+		// 브라우저가 DOM구성시 같은 이름이면 자동으로 배열 전환
+		for (var i = 0; i < document.getElementById("f_test3").cb.length; i++) {
+			if (p_dap == i) {
+				document.getElementById("f_test3").cb[i].checked = 1;
+			} else {
+				document.getElementById("f_test3").cb[i].checked = 0;
+			}
+		}
+	}
+	function prev() {
+		location.href="test1.jsp?dap1=<%=dap1%>&dap2=<%=dap2%>";	
+	}
+	function next() {
+		var temp = 1;
+		for(var i=0; i<document.getElementById("f_test3").cb.length; i++) {
+			if(document.getElementById("f_test3").cb[i].checked==1) {
+				document.getElementById("f_test3").dap3.value = temp;
+			}
+			else {
+				temp = temp + 1;
+			}
+		}
+		document.getElementById("f_test3").submit();
+	}
+</script>
+</head>
+<body>
+	<div class="easyui-panel" title="문제3" style="width: 500px; height: 500px; padding: 10px"
+		data-options="fit:false,border:true,footer:'#footer'">
+		<form id="f_test3" method="get" action="result.jsp">
+		<input type="hidden" id="dap1" name="dap1" value="<%=dap1%>">
+		<input type="hidden" id="dap2" name="dap2" value="<%=dap2%>">
+		<input type="hidden" id="dap3" name="dap3"/>
+		<div>
+			<div style="margin-bottom: 5px"></div>
+			문제3. 관계형 데이터베이스 릴레이션 구조 중에 "속성들의 수"를 뜻하는 명칭을 고르시오.
+		</div>
+		<br>
+		<div style="margin-bottom: 10px"></div>
+		<input type="checkbox" name="cb" value="1" onChange="answer(0)"> 
+		1.차수
+		<div style="margin-bottom: 5px"></div>
+		<input type="checkbox" name="cb" value="2" onChange="answer(1)"> 
+		2.카디널리티
+		<div style="margin-bottom: 5px"></div>
+		<input type="checkbox" name="cb" value="3" onChange="answer(2)"> 
+		3.튜플
+		<div style="margin-bottom: 5px"></div>
+		<input type="checkbox" name="cb" value="4" onChange="answer(3)"> 
+		4.NULL
+		</form>
+	</div>
+	<div id="footer" style="padding: 5px;">
+		<a id="btn" href="javascript:prev()" class="easyui-linkbutton"
+			data-options="iconCls:'icon-undo'" style="width: 80px">이전</a> 
+		<a id="btn" href="javascript:next()" class="easyui-linkbutton"
+			data-options="iconCls:'icon-redo'" style="width: 80px">제출</a>
+	</div>
+</body>
+</html>
+<!-- 답 1번 -->

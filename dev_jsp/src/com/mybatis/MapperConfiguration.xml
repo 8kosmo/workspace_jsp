@@ -2,7 +2,7 @@
 <!DOCTYPE configuration     PUBLIC "-//mybatis.org//DTD Config 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<environments default="development">
-		<!-- <environment id="development2">
+		 <environment id="development">
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
 				<property name="driver" value="oracle.jdbc.driver.OracleDriver" />
@@ -10,13 +10,13 @@
 				<property name="username" value="scott" />
 				<property name="password" value="tiger" />
 			</dataSource>
-		</environment> -->
-		<environment id="development">
+		</environment>
+<!-- 		<environment id="development">
 			<transactionManager type="MANAGED" />
 			<dataSource type="JNDI">
 				<property name="data_source" value="java:comp/env/jdbc/dbPool" />
 			</dataSource>
-		</environment>
+		</environment> -->
 	</environments>
 	<mappers>
 		<mapper resource="com/mybatis/mapper/onLineTest.xml" />

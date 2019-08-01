@@ -13,6 +13,6 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="com/mybatis/mapper/Membermapper.xml" />
+		<mapper resource="com/mybatis/mapper/MemberMapper.xml" />
 	</mappers>
 </configuration> 

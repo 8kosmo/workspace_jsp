@@ -1,0 +1,71 @@
+package com.mvc2;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+
+public class ActionServlet extends HttpServlet {
+	Logger logger = Logger.getLogger(ActionServlet.class);
+	public void doService(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException{
+		//==> dev_jsp/onLineTest/test.mo?crud=select
+		//==> /onLineTest/test.mo?crud=select
+		String requestURI = req.getRequestURI();
+		String contextPath = req.getContextPath();//=> /dev_jsp or /
+		//아래 코드에서 경로 앞에 /가 빠짐
+		//	onLineTest/test.mo?crud=select
+		String command = requestURI.substring(contextPath.length()+1);
+		logger.info("requestURI: "+requestURI);
+		logger.info("command :"+command);
+		Controller controller = null;
+		//crud=>select
+		String crud = req.getParameter("crud");
+		logger.info("crud: "+crud);
+		try {
+			controller = ControllerMapping.getController(command, crud);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		if(controller!=null) {
+			//return "redirect:XXX.jsp"; //return "forward:XXX.jsp";
+			String pageMove[] = null;
+			try {
+				String ret = controller.execute(req, res);
+				//pageMove[0]=redirect or forward
+				//pageMove[1]=실제 요청 이름
+				pageMove = ret.split(":");
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			if(pageMove!=null) {
+				String path = pageMove[1];
+				if("redirect".equals(pageMove[0])) {//sendRedirect 일 때
+					
+				}
+				else {//forward
+					if("forward".equals(pageMove[0])) {
+						RequestDispatcher view =
+								req.getRequestDispatcher(path);
+						view.forward(req, res);
+					}else {
+						res.sendRedirect("/error/pageMoveFail.jsp");
+					}
+				}
+			}
+		}
+	}
+	public void doGet(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException{
+		doService(req,res);
+	}
+	public void doPost(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException{
+		doService(req,res);
+	}
+}

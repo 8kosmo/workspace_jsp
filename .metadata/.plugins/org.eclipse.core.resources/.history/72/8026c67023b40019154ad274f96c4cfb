@@ -1,0 +1,40 @@
+package com.mvc2;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+
+import com.vo.MemberVO;
+
+public class Member2Controller implements Controller {
+	Logger logger = Logger.getLogger(Member2Controller.class);
+	String path = null;
+	String requestName = null;
+	String crud = null;
+	MemberLogic memLogic = null;
+	public Member2Controller(String requestName, String crud) {
+		this.requestName = requestName;
+		this.crud = crud;
+		memLogic = new MemberLogic();
+	}
+
+	@Override
+	public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		logger.info("execute 호출 성공");
+		if("index".equals(crud)) {
+			
+			path="redirect:/onLineTest2/index.jsp";
+		}
+		else if("login".equals(crud)) {
+			MemberVO pmVO = new MemberVO();
+			pmVO.setMem_id(req.getParameter("mem_id"));
+			pmVO.setMem_pw(req.getParameter("mem_pw"));
+			memLogic.proc_login(pmVO);
+			path="redirect:/onLineTest2/loginAccount.jsp";
+			//path="redirect:/onLineTest/getSubjectList.kos";
+		}
+		return path;
+	}
+
+}

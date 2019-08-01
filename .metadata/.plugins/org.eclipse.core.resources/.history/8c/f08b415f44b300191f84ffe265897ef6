@@ -1,0 +1,15 @@
+package com.mvc2;
+
+public class ControllerMapping {
+	String crud = "";
+	/**
+	 * 
+	 * @param command /onLineTest/getSubjectList.mo?work=onLineTest
+	 * @param crud
+	 * @return
+	 */
+	public static Controller getController(String command, String crud) {
+		String commands[] = command.split("/");
+		return new Controller();
+	}
+}

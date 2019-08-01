@@ -2,6 +2,12 @@
 <!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.OnLineTestMapper">
 	<resultMap id="swDVO" type="com.vo.SwDesignVO"/>
+	<select id="isOk" parameterType="map" resultType="string">
+		SELECT NVL((SELECT '승인' FROM TAKE_EXAMINATION
+		             WHERE mem_id = #{mem_id}
+		               AND exam_no = #{exam_no}),'확인불가')
+		  FROM dual
+	</select>
 	<select id="swDesignExam" parameterType="map" statementType="CALLABLE">
 	{  call proc_swDesign(#{key, jdbcType=CURSOR, mode=OUT, javaType=java.sql.ResultSet, resultMap=swDVO
 	})}

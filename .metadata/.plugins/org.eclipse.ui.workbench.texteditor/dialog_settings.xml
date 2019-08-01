@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="loginForm"/>
+		<item key="selection" value="myModal"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="myModal"/>
+			<item value="teVO"/>
+			<item value="mVO"/>
+			<item value="spy"/>
+			<item value="g_subcd"/>
+			<item value="alert"/>
+			<item value="dlg_test1"/>
+			<item value="send"/>
+			<item value="d_isOk"/>
+			<item value="exam_no"/>
+			<item value="isOk"/>
 			<item value="loginForm"/>
 			<item value="dlg_confirm"/>
 			<item value="examStart"/>
 			<item value="v_test2"/>
-			<item value="d_test2"/>
-			<item value="test1"/>
-			<item value="cd_subject"/>
-			<item value="loginAction"/>
 		</list>
 		<list key="replacehistory">
 			<item value="test4"/>

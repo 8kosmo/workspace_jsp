@@ -1,0 +1,57 @@
+package com.mvc2;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+
+import com.util.HashMapBinder;
+
+public class Test2Controller implements Controller {
+	Logger logger = Logger.getLogger(Test2Controller.class);
+	String path = null;
+	String requestName = null;
+	String crud = null;
+	TestLogic tLogic = null;
+	public Test2Controller(String requestName, String crud) {
+		this.requestName = requestName;
+		this.crud = crud;
+		tLogic = new TestLogic();
+	}
+
+	@Override
+	public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		logger.info("execute 호출 성공");
+		if("examReceipt".equals(crud)) {
+			int result = 0;//시험접수 업무에 대한 요청이므로 insert
+			Map<String, Object> pMap = new HashMap<>();
+			HashMapBinder hmb = new HashMapBinder(req);
+			hmb.bind(pMap);
+			result = tLogic.examReceipt(pMap);
+			if(result==1){
+				path = "redirect:examReceiptSuccess.jsp";
+			}else {
+				path = "redirect:examReceoptFail.jsp";
+			}
+		}else if("subjectList".equals(crud)) {
+			List<Map<String, Object>> subList = null;
+			subList = tLogic.subjectList();
+			req.setAttribute("subList", subList);
+			path = "forward:jsonSubjectList.jsp";
+		}else if("delete".equals(crud)) {
+			
+			path = "";
+		}else if("insert".equals(crud)) {
+			
+			path = "";
+		}else {
+			path = "redirect:index.jsp";
+		}
+		return path;
+	}
+
+}

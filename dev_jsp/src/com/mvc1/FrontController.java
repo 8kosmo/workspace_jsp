@@ -34,11 +34,11 @@ public class FrontController extends HttpServlet {
 		String uri = req.getRequestURI();//	/member/memberList.kos
 		String context = req.getContextPath();
 		String command = uri.substring(context.length()+1);//+1은 처음/을 날린다.
-		//memberInsert.kos
+											//command = member/memberList.kos
 		int end = command.lastIndexOf('.');
 		logger.info(command+" , "+end);
-		command = command.substring(0,end);	//member/memberList.kos에서 .kos를 지운다
-		logger.info(command);				//member/memberList
+		command = command.substring(0,end);	//command = member/memberList.kos에서 .kos를 지운다
+		logger.info(command);				//command = member/memberList
 		/* 테스트 할 때 어떤 이름 이든 상관 없이 ?work=member를 넘겨주면 됨.
 		 * work정보는 사용자가 요청시 결정해서 넘겨주고
 		 * crud의 경우는 같은 회원관리 업무 중에서도 입력인지 수정건인지 삭제건인지 조회건인지

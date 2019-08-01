@@ -13,3 +13,40 @@
 7월 30, 2019 15:22:06.52 [14500:19776:0730/152206.522:ERROR:browser_process_sub_thread.cc(221)] Waited 19 ms for network service
 7월 30, 2019 15:24:01.59 [12256:14152:0730/152401.593:ERROR:browser_process_sub_thread.cc(221)] Waited 15 ms for network service
 7월 30, 2019 15:24:35.81 [20748:13616:0730/152435.811:ERROR:browser_process_sub_thread.cc(221)] Waited 17 ms for network service
+
+7월 31, 2019 10:59:43.98 NEW SESSION
+7월 31, 2019 10:59:43.98 [9804:12364:0731/105943.979:ERROR:browser_process_sub_thread.cc(221)] Waited 17 ms for network service
+7월 31, 2019 11:07:21.14 [8744:6932:0731/110721.143:ERROR:browser_process_sub_thread.cc(221)] Waited 19 ms for network service
+7월 31, 2019 11:07:40.24 [13884:8660:0731/110740.246:ERROR:browser_process_sub_thread.cc(221)] Waited 19 ms for network service
+7월 31, 2019 11:15:45.64 [6108:20300:0731/111545.644:ERROR:browser_process_sub_thread.cc(221)] Waited 19 ms for network service
+7월 31, 2019 11:16:07.39 [14204:16912:0731/111607.398:ERROR:browser_process_sub_thread.cc(221)] Waited 14 ms for network service
+7월 31, 2019 11:17:05.80 [13372:6060:0731/111705.803:ERROR:browser_process_sub_thread.cc(221)] Waited 12 ms for network service
+7월 31, 2019 11:17:59.28 [6104:18656:0731/111759.286:ERROR:browser_process_sub_thread.cc(221)] Waited 12 ms for network service
+7월 31, 2019 11:18:47.29 [17716:15500:0731/111847.290:ERROR:service_manager_context.cc(242)] Attempting to run unsupported native service: C:\Program Files (x86)\Google\Chrome\Application\75.0.3770.142\content_browser.service.exe
+7월 31, 2019 11:18:47.30 [17716:15500:0731/111847.291:ERROR:service_manager_context.cc(242)] Attempting to run unsupported native service: C:\Program Files (x86)\Google\Chrome\Application\75.0.3770.142\content_browser.service.exe
+7월 31, 2019 11:18:47.30 [17716:15500:0731/111847.292:ERROR:service_manager_context.cc(242)] Attempting to run unsupported native service: C:\Program Files (x86)\Google\Chrome\Application\75.0.3770.142\content_browser.service.exe
+7월 31, 2019 11:18:47.30 [17716:15500:0731/111847.293:ERROR:service_manager_context.cc(242)] Attempting to run unsupported native service: C:\Program Files (x86)\Google\Chrome\Application\75.0.3770.142\content_browser.service.exe
+7월 31, 2019 11:18:47.31 [17716:15500:0731/111847.314:ERROR:browser_process_sub_thread.cc(221)] Waited 14 ms for network service
+7월 31, 2019 11:19:50.06 [19344:11912:0731/111950.063:ERROR:browser_process_sub_thread.cc(221)] Waited 14 ms for network service
+7월 31, 2019 11:22:26.70 [8988:16532:0731/112226.701:ERROR:browser_process_sub_thread.cc(221)] Waited 16 ms for network service
+7월 31, 2019 11:23:35.03 [2356:8912:0731/112335.032:ERROR:browser_process_sub_thread.cc(221)] Waited 16 ms for network service
+7월 31, 2019 11:25:06.13 [1244:17320:0731/112506.134:ERROR:browser_process_sub_thread.cc(221)] Waited 15 ms for network service
+7월 31, 2019 11:25:29.82 [5460:1940:0731/112529.821:ERROR:browser_process_sub_thread.cc(221)] Waited 14 ms for network service
+7월 31, 2019 11:27:57.39 [1348:21968:0731/112757.396:ERROR:browser_process_sub_thread.cc(221)] Waited 15 ms for network service
+7월 31, 2019 11:31:48.12 [12676:12964:0731/113148.122:ERROR:browser_process_sub_thread.cc(221)] Waited 17 ms for network service
+7월 31, 2019 11:37:39.17 [18476:1120:0731/113739.171:ERROR:browser_process_sub_thread.cc(221)] Waited 18 ms for network service
+7월 31, 2019 11:38:08.16 [19676:19344:0731/113808.169:ERROR:browser_process_sub_thread.cc(221)] Waited 19 ms for network service
+7월 31, 2019 11:39:31.58 [2856:18000:0731/113931.583:ERROR:browser_process_sub_thread.cc(221)] Waited 12 ms for network service
+7월 31, 2019 11:48:03.79 [14532:12460:0731/114803.794:ERROR:browser_process_sub_thread.cc(221)] Waited 15 ms for network service
+7월 31, 2019 11:50:04.37 [11488:14724:0731/115004.374:ERROR:browser_process_sub_thread.cc(221)] Waited 10 ms for network service
+7월 31, 2019 14:48:45.64 [1620:8116:0731/144845.648:ERROR:browser_process_sub_thread.cc(221)] Waited 14 ms for network service
+7월 31, 2019 18:37:32.29 [16020:7072:0731/183732.291:ERROR:browser_process_sub_thread.cc(221)] Waited 11 ms for network service
+
+8월 01, 2019 15:21:39.24 NEW SESSION
+8월 01, 2019 15:21:39.24 [16812:22300:0801/152139.246:ERROR:browser_process_sub_thread.cc(221)] Waited 18 ms for network service
+8월 01, 2019 15:46:23.76 [15672:19464:0801/154623.760:ERROR:browser_process_sub_thread.cc(221)] Waited 14 ms for network service
+8월 01, 2019 15:54:28.93 [6312:13856:0801/155428.938:ERROR:browser_process_sub_thread.cc(221)] Waited 21 ms for network service
+8월 01, 2019 15:59:59.37 [14632:16144:0801/155959.378:ERROR:browser_process_sub_thread.cc(221)] Waited 17 ms for network service
+8월 01, 2019 16:02:03.75 [15076:10396:0801/160203.750:ERROR:browser_process_sub_thread.cc(221)] Waited 12 ms for network service
+8월 01, 2019 16:11:53.44 [7472:220:0801/161153.442:ERROR:browser_process_sub_thread.cc(221)] Waited 10 ms for network service
+8월 01, 2019 18:33:28.37 [20336:8336:0801/183328.373:ERROR:browser_process_sub_thread.cc(221)] Waited 10 ms for network service

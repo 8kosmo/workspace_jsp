@@ -1,0 +1,98 @@
+package com.mvc2;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.log4j.Logger;
+
+import com.util.MyBatisCommonFactory;
+
+public class TestDao {
+	Logger logger = Logger.getLogger(TestDao.class);
+	//물리적으로 떨어져있는 오라클 서버와 연결통로만 맺게 해주는 객체
+	//오라클 서버에 요청하는데 필요한 sqlSession객체 생성시 의존관계에 있는 클래스
+	SqlSessionFactory sqlSessionFactory = null;
+	/*
+	 * Dao에서 MyBatis를 활용하여 오라클 서버에 접속
+	 * 쿼리문을 요청하기 위해  myBatis에서 제공하는 클래스를 객체 주입받아야 함
+	 * 생성자에서 조회하기
+	 * 생성자가 하는 역할이 멤버변수의 초기화이므로 생성자안에서 sqlSessionFactory객체를 주입받는다.
+	 * myBatis Layer에서 오라클 서버와 커넥션을 맺는 것과 쿼리문을 요청하고 그 응답을 받는 일까지 모두 담당하므로 
+	 * 이것과 관련된 하나의 이상이라도 존재하면 NullPointException이 발생하므로 디버기잇 주의할 것
+	 */
+	public TestDao() {
+		sqlSessionFactory = MyBatisCommonFactory.getSqlSessionFactory();
+	}
+	/*
+	 * crud이름 = 메소드이름 = 쿼리문아이디 통일
+	 * 
+	 */
+	public List<Map<String, Object>> subjectList() {
+		logger.info("subjectList 호출");
+		// NullPointException이 발생화면 화면을 확인 불가
+		// 페이지 이동시 어떤 화면에서 에러가 발생했는지 파악 어려움
+		List<Map<String, Object>> subList = new ArrayList<Map<String,Object>>();
+		try {
+			SqlSession sqlSession = sqlSessionFactory.openSession();
+			subList = sqlSession.selectList("subjectList");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return subList;
+	}
+	// 수험번호 채번하는 메소드 구현
+	public String getExamNo() {
+		logger.info("getExamNo 호출");
+		String exam_no = null;
+		try {
+			SqlSession sqlSession = sqlSessionFactory.openSession();
+			exam_no = sqlSession.selectOne("getExamNo");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exam_no;
+	}
+	// 시험 응시 정보 등록
+	public int examReceipt(Map<String, Object> pMap) {
+		logger.info("examReceipt 호출");
+		int result = 0;
+		try {
+			SqlSession sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.update("examReceipt",pMap);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	public List<Map<String, Object>> swDesignExam(Map<String, Object> pMap) {
+		List<Map<String, Object>> designList = new ArrayList<Map<String,Object>>();
+		try {
+			SqlSession sqlSession = sqlSessionFactory.openSession();
+			designList = sqlSession.selectList("swDesignExam",pMap);
+			logger.info("pMap==>"+pMap);
+			designList.add(pMap);
+			logger.info("designList.get(0)==>"+designList.get(0));
+/*
+ * 
+ */
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return designList;
+	}
+	public String isOk(Map<String, Object> pMap) {
+		String msg = null;
+		try {
+			//NullPointerException발생 시 확인 할 내용 - xml문서에 작성된 프로시저나 DML구문확인
+			SqlSession sqlSession = sqlSessionFactory.openSession();
+			msg = sqlSession.selectOne("isOk",pMap);
+		} catch (Exception e) {
+			e.printStackTrace();//Line번호, 호출 경로 확인
+		}
+		return msg;
+	}
+}

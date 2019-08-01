@@ -1,0 +1,79 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="com.vo.MemberVO" %>
+<% 
+	MemberVO mVO = (MemberVO)session.getAttribute("rmVO");
+	String s_memid = null;
+	String s_memname = null;
+	if(mVO!=null) {
+		s_memid = mVO.getMem_id();
+		s_memname = mVO.getMem_name();
+	}
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자격시험접수 - 정보처리기사</title>
+<%@ include file="../common/JEasyUICommon.jsp" %>
+<script type="text/javascript">
+	function receipt() {
+		$("#f_receipt").attr("method","get");
+		$("#f_receipt").attr("action","test.mo"); //crud이름
+		$("#f_receipt").submit(); // 전송
+	}
+</script>
+</head>
+<body>
+<script type="text/javascript">
+	$.fn.datebox.defaults.formatter = function(date) {
+		var y = date.getFullYear();
+		var m = date.getMonth() + 1;
+		var d = date.getDate();
+		return y + '-' + (m<10 ? ('0'+m):m) + '-' + (d<10 ? ('0'+d):d);
+	}
+	$.fn.datebox.defaults.parser = function(s) {
+		var t = Date.parse(s);
+		if (!isNaN(t)) {
+			return new Date(t);
+		} else {
+			return new Date();
+		}
+	}
+	$(document).ready(function() {
+		$('#mem_name').textbox('setValue','<%=s_memname %>');
+		$('#cd_subject').combobox({
+		    url:'test.mo?crud=subjectList'
+		    ,valueField:'SUB_CD'	// 서버에 넘어가는 값
+		    ,textField:'SUB_NAME'	// 화면에 출력되는 값
+		    ,panelHeight:'auto'
+		    ,onSelect:function(record) {
+		    	//alert(record.SUB_NAME);
+		    }
+		});
+	});
+</script>
+
+<div class="easyui-panel" title="자격시험 접수" style="width:400px;max-width:600x;padding:30px 30px">
+	<!-- jquery에서 제공하는 attr()메소드에 쿼리스트링은 값이 넘어가지 않음  : 결함 
+		hidden으로 처리
+	-->
+	<form id="f_receipt">
+	<input type="hidden" id="mem_id" name="mem_id" value="<%=s_memid %>">
+	<input type="hidden" id="crud" name="crud" value="examReceipt">
+	<div style="margin-bottom:10px">
+		<input class="easyui-textbox" id="mem_name" name="mem_name" label="이름: " labelPosition="top" style="width:160px">
+	</div>
+	<div style="margin-bottom:10px">
+		<input class="easyui-datebox" id="exam_date" name="exam_date" label="응시일자: " labelPosition="top" style="width:160px">
+	</div>
+	<div style="margin-bottom:20px">
+		<select class="easyui-combobox" id="cd_subject" name="sub_cd" label="수험과목 선택:" labelPosition="top" data-options="prompt:'수험번호를 선택하세요'" style="width:160px"></select>
+	</div>
+	<div align="center">
+		<a href="javascript:receipt()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" style="width:100px;height:32px">접수</a>
+	</div>
+	</form>
+</div>
+</body>
+</html>

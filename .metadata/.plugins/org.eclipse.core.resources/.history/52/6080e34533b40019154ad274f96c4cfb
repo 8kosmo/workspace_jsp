@@ -1,0 +1,71 @@
+package com.mvc2;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+
+import com.util.HashMapBinder;
+
+public class Test2Controller implements Controller {
+	Logger logger = Logger.getLogger(Test2Controller.class);
+	String path = null;
+	String requestName = null;
+	String crud = null;
+	TestLogic tLogic = null;
+	public Test2Controller(String requestName, String crud) {
+		this.requestName = requestName;
+		this.crud = crud;
+		tLogic = new TestLogic();
+	}
+
+	@Override
+	public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		logger.info("execute 호출 성공");
+		if("examReceipt".equals(crud)) {
+			int result = 0;//시험접수 업무에 대한 요청이므로 insert
+			Map<String, Object> pMap = new HashMap<>();
+			HashMapBinder hmb = new HashMapBinder(req);
+			hmb.bind(pMap);
+			result = tLogic.examReceipt(pMap);
+			if(result==1){
+				path = "redirect:examReceiptSuccess.jsp";
+			}else {
+				path = "redirect:examReceoptFail.jsp";
+			}
+		}
+		/**********************
+		 * 수험과목 목록을 가져오기 구현 *
+		 **********************/
+		else if("subjectList".equals(crud)) {
+			List<Map<String, Object>> subList = null;
+			subList = tLogic.subjectList();
+			//이 부분이 빠지게 되면 NullPointerException
+			req.setAttribute("subList", subList);
+			path = "forward:jsonSubjectList.jsp";
+		}else if("onLineTest/isOk".equals(crud)) {
+			String msg = null;
+			//오라클 서버에 넘길 값을 map에 담기 위한 객체 생성하기
+			Map<String, Object> pMap = new HashMap<>();
+			//요청 값을 받아오는 공통 클래스를 생성한 후
+			HashMapBinder hmb = new HashMapBinder(req);
+			//bind메소드 호출하면 공통코드에서 자동으로 담아줌.
+			//파라미터로 받아오는 값이 한글이 아니므로 bindPost대신 bind호출
+			hmb.bind(pMap);
+			msg = tLogic.isOk(pMap);
+			req.setAttribute("msg", msg);
+			path = "forward:isOkResult.jsp";
+		}else if("insert".equals(crud)) {
+			
+			path = "";
+		}else {
+			path = "redirect:index.jsp";
+		}
+		return path;
+	}
+
+}

@@ -40,7 +40,7 @@ public class TestController extends HttpServlet implements Action {
 			 * 따라서 키 값을 사용하여 일차 컬렉션을 꺼내고 난 후 
 			 * Iterator를 활용하여 값을 꺼내야 원하는 정보를 볼 수 있다.
 			 */
-			List list = null;
+			List list = designList;
 			if(designList != null) {
 				list = (List)designList.get(0).get("key");
 			}
@@ -58,6 +58,22 @@ public class TestController extends HttpServlet implements Action {
 			}
 			req.setAttribute("designList", list);
 			viewName = "jsonSwDesign.jsp";
+			isRedirect = false;	//true redirect, false forward
+			forward.setRedirect(isRedirect);
+			forward.setviewName(viewName);
+		}
+		else if("onLineTest/isOk".equals(crud)) {
+			String msg = null;
+			//오라클 서버에 넘길 값을 map에 담기 위한 객체 생성하기
+			Map<String, Object> pMap = new HashMap<>();
+			//요청 값을 받아오는 공통 클래스를 생성한 후
+			HashMapBinder hmb = new HashMapBinder(req);
+			//bind메소드 호출하면 공통코드에서 자동으로 담아줌.
+			//파라미터로 받아오는 값이 한글이 아니므로 bindPost대신 bind호출
+			hmb.bind(pMap);
+			msg = tLogic.isOk(pMap);
+			req.setAttribute("msg", msg);
+			viewName = "isOkResult.jsp";
 			isRedirect = false;	//true redirect, false forward
 			forward.setRedirect(isRedirect);
 			forward.setviewName(viewName);

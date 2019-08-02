@@ -1,0 +1,9 @@
+package com.chain;
+
+public class ChainTest1 {
+
+	public static void main(String[] args) {
+		Block firstBlock = new Block("2000", "0");
+		System.out.println("first:"+firstBlock.hash);
+	}
+}

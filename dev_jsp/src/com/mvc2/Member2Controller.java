@@ -34,7 +34,7 @@ public class Member2Controller implements Controller {
 			pmVO.setMem_pw(req.getParameter("mem_pw"));
 			MemberVO rmVO = memLogic.proc_login(pmVO);
 			HttpSession session = req.getSession();
-			logger.info("이름 : "+rmVO.mem_name);
+			logger.info("이름 : "+rmVO.getMem_name());
 			session.setAttribute("rmVO", rmVO);
 			path="redirect:/onLineTestVer2/loginAccount.jsp";
 			//path="redirect:/onLineTest/getSubjectList.kos";

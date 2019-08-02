@@ -11,4 +11,11 @@
 <fullyQualifiedTypeName name="com.util.HashMapBinder"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.security.MessageDigest"/>
+<fullyQualifiedTypeName name="java.lang.StringBuffer"/>
+<fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="com.util.Sha256Util"/>
+<fullyQualifiedTypeName name="com.google.gson.GsonBuilder"/>
 </qualifiedTypeNameHistroy>

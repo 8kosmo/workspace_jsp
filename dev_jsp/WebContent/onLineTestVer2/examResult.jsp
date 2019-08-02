@@ -7,13 +7,24 @@
 <title>시험응시결과</title>
 <%@ include file="../common/JEasyUICommon.jsp" %>
 <script type="text/javascript">
-	function examSend() {
+	function examSend(){
+		//alert("4번:"+$.cookie('c_test4'));
+		var c_examno = $.cookie('c_examno');
+		var exam_no = $('#exam_no').val();
+		var dap1 = $.cookie('c_test1');
+		var dap2 = $.cookie('c_test2');
+		var dap3 = $.cookie('c_test3');
+		var dap4 = $.cookie('c_test4');
 		//전송한 답안지를 DB에 추가하고 현재 창은 닫기처리
  		$.ajax({
 			method:"get"
-			,url:""
+			,url:"test.mo?crud=examAccount&exam_no="+c_examno
+													+"&dap1="+dap1
+													+"&dap2="+dap2
+													+"&dap3="+dap3
+													+"&dap4="+dap4
 			,success:function(data){
-				
+				alert("당신의 취득점수는 "+data+" 입니다.");
 			}
 		});
 		self.close();

@@ -1,0 +1,9 @@
+package com.chain;
+
+public class Block {
+	public String hash = null;//해시값 담을 변수
+	public String previousHash = null;//이전 해시값을 담을 변수
+	private String data = null;//블록에 저장할 데이터-금액
+	//new Date().getTime()
+	private long timeStamp = 0;//1970년1월1일부터 millisec단위로 숫자값
+}

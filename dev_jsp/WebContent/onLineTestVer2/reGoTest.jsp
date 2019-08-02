@@ -24,9 +24,7 @@ $.removeCookie('name');
 <title>자격시험 보기</title>
 <%@ include file="../common/JEasyUICommon.jsp" %>
 <script type="text/javascript">
-	function examSend(){
-		//alert("4번:"+$.cookie('c_test4'));
-	}
+
 	function examStart(){
 		var uexam_no = $("#exam_no").val();
 		//******************승인처리 ajax******************
@@ -35,6 +33,7 @@ $.removeCookie('name');
 			,url:"test.mo?crud=isOk&mem_id=<%=s_memid%>&exam_no="+uexam_no+"&"+new Date().getTime()
 			,success:function(data){//data -> '승인' or '확인불가'
 				//alert("data : "+data);
+				$.cookie("c_examno",uexam_no);
 				if(data=='승인'){//승인
 					//******************문제지 배포 ajax******************
 					$.ajax({

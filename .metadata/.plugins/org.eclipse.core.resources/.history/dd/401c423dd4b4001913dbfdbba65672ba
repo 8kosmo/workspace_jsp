@@ -1,0 +1,10 @@
+package com.chain;
+
+import java.util.ArrayList;
+
+public class ChainTest2 {
+	public static ArrayList<Block> blockchain = new ArrayList<>();
+	public static void main(String args[]) {
+		
+	}
+}

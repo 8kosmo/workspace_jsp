@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 
 import com.vo.MemberVO;
 import com.vo.ZipCodeVO;
-
 public class MemberLogic {
 	Logger logger = Logger.getLogger(MemberLogic.class);
 	MemberDao mDao = new MemberDao();

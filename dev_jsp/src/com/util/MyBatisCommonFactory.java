@@ -21,7 +21,7 @@ public class MyBatisCommonFactory {
 	
 	public static void init() {
 		try {			
-			String resource = "com/mybatis/MapperConfiguration.xml";
+			String resource = "com/mybatis/MapperConfig.xml";
 			Reader reader = Resources.getResourceAsReader(resource);
 			if(sqlSessionFactory==null) {
 				sqlSessionFactory = 

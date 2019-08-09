@@ -1,6 +1,8 @@
 package com.mvc2;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+
+import com.util.HashMapBinder;
 
 public class ActionServlet extends HttpServlet {
 	Logger logger = Logger.getLogger(ActionServlet.class);
@@ -32,6 +36,7 @@ public class ActionServlet extends HttpServlet {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		logger.info("controller: "+controller);
 		if(controller!=null) {
 			//return "redirect:XXX.jsp"; //return "forward:XXX.jsp";
 			String pageMove[] = null;
@@ -51,7 +56,10 @@ public class ActionServlet extends HttpServlet {
 				String ret = controller.execute(req, res);
 				//pageMove[0]=redirect or forward
 				//pageMove[1]=실제 요청 이름
-				pageMove = ret.split(":");
+				pageMove = ret.split(":");//redirect:/onLineTestVer2/loginAccount.jsp
+				for(int i=0;i<pageMove.length;i++) {
+					logger.info(pageMove[i]);
+				}
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -69,6 +77,7 @@ public class ActionServlet extends HttpServlet {
 						res.sendRedirect("/error/pageMoveFail.jsp");
 					}
 				}
+				logger.info("==============END OF ACTION==============");
 			}
 		}
 	}

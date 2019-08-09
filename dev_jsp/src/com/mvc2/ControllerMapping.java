@@ -18,7 +18,10 @@ public class ControllerMapping {
 		String commands[] = command.split("/");
 		String work = commands[0];//onLineTest
 		String requestName = commands[1];//test.mo
-		if("onLineTestVer2".equals(work)) {
+		if("board".equals(work)) {
+			controller = new BoardController(requestName,ControllerMapping.crud);//(6)(test.mo , else)			
+		}
+		else if("onLineTestVer2".equals(work)) {
 			controller = new Test2Controller(requestName,ControllerMapping.crud);//(6)(test.mo , else)
 		}
 		else if("member".equals(work)) {

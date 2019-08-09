@@ -96,4 +96,10 @@ public class Test2Controller implements Controller {
 		return path;
 	}
 
+	@Override
+	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res, String crud) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

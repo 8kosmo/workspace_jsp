@@ -1,0 +1,106 @@
+package com.mvc2;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+
+import com.util.HashMapBinder;
+import com.vo.BoardMasterVO;
+
+public class BoardController implements Controller {
+	Logger logger = Logger.getLogger(BoardController.class);
+	String path = null;
+	String requestName = null;
+	String crud = null;
+	BoardLogic bLogic = null; 
+	public BoardController(String requestName, String crud) {
+		this.requestName = requestName;
+		this.crud = crud;
+		bLogic = new BoardLogic();
+	}
+
+	@Override
+	public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		logger.info("execute(req,res) 호출");
+		if("boardList".equals(crud))
+		{
+			logger.info("목록조회");
+			List<Map<String, Object>> boardList = null;
+			//조회시 검색 조건에 해당하는 값을 담는 변수
+			BoardMasterVO bmVO = new BoardMasterVO();
+			//콤보박스에서 선택한 value값이 담김 - bm_title, bm_content, bm_writer
+			String cb_search = req.getParameter("cb_search");
+			bmVO.setCb_search(cb_search);
+			//사용자가 입력한 문자열
+			String keyword = req.getParameter("keyword");
+			bmVO.setKeyword(keyword);
+			//페이지처리 초기값 담기
+			int pageNumber = 0;
+			int pageSize   = 0;
+			if(req.getParameter("pageNumber")!=null) {
+				pageNumber = Integer.parseInt(req.getParameter("pageNumber"));
+			}
+			if(req.getParameter("pageSize")!=null) {
+				pageSize = Integer.parseInt(req.getParameter("pageSize"));
+			}
+			bmVO.setPageNumber(pageNumber);
+			bmVO.setPageSize(pageSize);
+			boardList =	bLogic.boardList(bmVO, req);
+			req.setAttribute("boardList", boardList);
+			path = "forward:jsonBoardList.jsp";
+		}
+		else if("boardDetail".equals(crud))
+		{
+			logger.info("상세조회");
+			BoardMasterVO bmVO = new BoardMasterVO();
+			bLogic.boardList(bmVO);
+			path = "forward:boardDetail.jsp";
+		}
+		else if("boardAdd".equals(crud))
+		{
+			logger.info("입력");
+			int result = 0;
+			Map<String, Object> pMap = new HashMap<>();
+			HashMapBinder hmb = new HashMapBinder(req);
+			hmb.multiBind(pMap);
+			//hmb.bindPost(pMap);
+			logger.info("제목: "+pMap.get("bm_title"));
+			logger.info("내용: "+pMap.get("bm_content"));
+			result = bLogic.boardAdd(pMap);
+			if(result == 1) {
+				path = "redirect:/board/boardList.jsp";
+			}else {
+				path = "redirect:/board/boardAddFail.jsp";
+			}
+		}
+		else if("boardUpd".equals(crud))
+		{
+			logger.info("수정");
+			Map<String, Object> pMap = new HashMap<>();
+			HashMapBinder hmb = new HashMapBinder(req);
+			hmb.bind(pMap);
+			int result = 0;
+			result = bLogic.boardUpd(pMap);
+			path = "forward:boardList.jsp";
+		}
+		else if("boardDel".equals(crud))
+		{
+			logger.info("삭제");
+			Map<String, Object> pMap = new HashMap<>();
+			HashMapBinder hmb = new HashMapBinder(req);
+			hmb.bind(pMap);
+			int result = 0;
+			result = bLogic.boardDel(pMap);
+			path = "forward:boardList.jsp";
+		}
+		//return null;//NullPointerException
+		//return "";//ArrayIndexOutofBoundException
+		return path;
+	}
+
+}

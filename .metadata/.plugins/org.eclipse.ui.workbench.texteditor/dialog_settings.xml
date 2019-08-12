@@ -1,38 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="myModal"/>
+		<item key="selection" value="dlg_"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="myModal"/>
-			<item value="teVO"/>
-			<item value="mVO"/>
-			<item value="spy"/>
-			<item value="g_subcd"/>
-			<item value="alert"/>
-			<item value="dlg_test1"/>
-			<item value="send"/>
-			<item value="d_isOk"/>
-			<item value="exam_no"/>
-			<item value="isOk"/>
-			<item value="loginForm"/>
-			<item value="dlg_confirm"/>
-			<item value="examStart"/>
-			<item value="v_test2"/>
+			<item value="dlg_"/>
+			<item value="dlg"/>
+			<item value="dlg_boardDel"/>
+			<item value="bm_pw"/>
+			<item value="textbox"/>
+			<item value="btn_boardDel"/>
+			<item value="deleteForm()"/>
+			<item value="deleteForm"/>
+			<item value="삭제"/>
+			<item value="sing"/>
+			<item value="delform"/>
+			<item value="목록"/>
+			<item value="boardAdd"/>
+			<item value="fileDown"/>
+			<item value="boardList"/>
 		</list>
 		<list key="replacehistory">
+			<item value="bs_file"/>
+			<item value="=&quot;"/>
+			<item value="iconCls="/>
+			<item value=" int      =0;"/>
+			<item value="String"/>
+			<item value="int"/>
 			<item value="test4"/>
 			<item value="test3"/>
 			<item value="test2"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1279"/>
-		<item key="DIALOG_Y_ORIGIN" value="235"/>
+		<item key="DIALOG_X_ORIGIN" value="1175"/>
+		<item key="DIALOG_Y_ORIGIN" value="361"/>
 		<item key="DIALOG_WIDTH" value="288"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>

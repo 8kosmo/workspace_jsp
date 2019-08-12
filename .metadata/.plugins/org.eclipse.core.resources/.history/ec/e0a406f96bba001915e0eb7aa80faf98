@@ -1,0 +1,30 @@
+package com.util;
+
+public class PageBar {
+	//전체레코드 갯수
+	private int 
+	//페이지당 레코드 수
+	private int numberPerpage;
+	//블럭당 디폴트 페이지 수 - 여기서는 일단 2개로 정함.
+	private int pagePerBlock;
+	//총페이지 수
+	private int totalPage;
+	//총블럭 수
+	private int totalBlock;
+	//현재 내가 바라보는 페이지 수
+	private int nowPage;
+	//현재 내가 바라보는 블럭 수
+	private int nowBlock;
+	//페이지 네비게이션 초기화
+	public PageBar () {
+		
+	}
+	//setter메소드 선언
+	public void setPageBar() {
+		
+	}
+	//getter메소드 선언
+	public void getPageBar() {
+		
+	}
+}

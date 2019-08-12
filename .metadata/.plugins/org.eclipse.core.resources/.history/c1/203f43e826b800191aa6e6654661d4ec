@@ -1,0 +1,100 @@
+package com.mvc2;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+
+import com.vo.BoardMasterVO;
+import com.vo.BoardSubVO;
+
+public class BoardLogic {
+	Logger logger = Logger.getLogger(BoardLogic.class);
+	BoardDao bDao = null;
+	public BoardLogic() {
+		bDao = new BoardDao();
+	}
+	public List<Map<String, Object>> boardList(BoardMasterVO bmVO){
+		logger.info("boardList 호출");
+		List<Map<String, Object>> boardList = null;
+		//전체레코드 수
+		int total = 0;
+		total = bDao.getTotal();
+		//현재 바라보는 페이지 번호
+		int pageNumber = 0;
+		//한 페이지에 뿌려질 수
+		int pageSize = 0;
+		//시작번호
+		int start = 0;
+		//끝 번호
+		int end = 0;
+		if(bmVO.getPageNumber()>0) {
+			pageNumber = bmVO.getPageNumber();
+		}
+		if(bmVO.getPageSize()>0) {
+			pageSize = bmVO.getPageSize();
+		}
+		if(pageNumber>0) {
+			start = ((pageNumber-1)*pageSize)+1;
+			end = pageNumber*pageSize;
+			bmVO.setStart(start);
+			if(end>total) {
+				bmVO.setEnd(total);
+			}else {
+				bmVO.setEnd(end);
+			}
+		}
+		return boardList;
+	}
+	public int boardAdd(Map<String, Object> pMap){
+		logger.info("boardAdd 호출");
+		int bm_no = 0;
+		int bm_group = 0;
+		int mresult = 0;
+		int sresult = 0;
+		bm_no = bDao.getBmno();
+		BoardMasterVO bmVO = new BoardMasterVO();
+		BoardSubVO bsVO = new BoardSubVO();
+		//첨부파일이 있을 때
+		if(pMap.get("bs_file")!=null && pMap.get("bs_file").toString().length()>1)
+			bsVO.setBm_no(bm_no);
+			bsVO.setBs_file(pMap.get("bs_file").toString());
+			bsVO.setBs_size(Double.parseDouble(pMap.get("bs_size").toString()));
+			sresult = bDao.boardSubAdd(bsVO);
+		//첨부파일이 없을 때
+		
+		//공통 처리부분
+		mresult = bDao.boardMasterAdd(bmVO);
+		return mresult;
+	}
+	public int boardUpd(Map<String, Object> pMap) {
+		logger.info("boardUpd 호출");
+		int result = 0;
+		int mresult = 0;
+		int sresult = 0;
+		BoardMasterVO bmVO = new BoardMasterVO();
+		BoardSubVO bsVO = new BoardSubVO();
+		//첨부파일이 있을 때
+		sresult = bDao.boardSubUpd(bsVO);
+		//첨부파일이 없을 때
+		
+		//공통 처리부분
+		mresult = bDao.boardMasterUpd(bmVO);
+		return result;
+	}
+	public int boardDel(Map<String, Object> pMap) {
+		logger.info("boardDel 호출");
+		int result = 0;
+		int mresult = 0;
+		int sresult = 0;
+		BoardMasterVO bmVO = new BoardMasterVO();
+		BoardSubVO bsVO = new BoardSubVO();
+		//첨부파일이 있을 때
+		sresult = bDao.boardSubDel(bsVO);
+		//첨부파일이 없을 때
+		
+		//공통 처리부분
+		mresult = bDao.boardMasterDel(bmVO);
+		return result;
+	}
+}

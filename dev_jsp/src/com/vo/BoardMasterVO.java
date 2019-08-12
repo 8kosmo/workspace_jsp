@@ -20,6 +20,8 @@ public class BoardMasterVO {
 	private int		pageSize	   =0;
 	private int 	start		   =0;//페이지네이션 처리시 시작번호
 	private int 	end		 	   =0;//페이지네이션 처리시 끝번호
+	//업무처리 구분 - 상세 조회시 detail
+	private String gubun		   =null;
 	public int getBm_no() {
 		return bm_no;
 	}
@@ -121,5 +123,11 @@ public class BoardMasterVO {
 	}
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
+	}
+	public String getGubun() {
+		return gubun;
+	}
+	public void setGubun(String gubun) {
+		this.gubun = gubun;
 	}
 }

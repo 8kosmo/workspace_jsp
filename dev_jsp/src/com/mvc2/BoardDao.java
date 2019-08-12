@@ -58,13 +58,27 @@ public class BoardDao {
 	/***************DELETE***************/
 	public int boardSubDel(BoardSubVO bsVO) {
 		logger.info("boardSubDel 호출성공");
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			SqlSession sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.update("boardSubDel",bsVO);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	public int boardMasterDel(BoardMasterVO bmVO) {
 		logger.info("boardMasterDel 호출성공");
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			SqlSession sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.update("boardMasterDel",bmVO);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	public int getTotal(BoardMasterVO bmVO) {
 		logger.info("getTotal 호출");
@@ -76,6 +90,16 @@ public class BoardDao {
 			e.printStackTrace();
 		}
 		return tot;
+	}
+	public int hitCount(int bm_no) {
+		int result = 0;
+		try {
+			SqlSession sqlSession = sqlSessionFactory.openSession();
+			bm_no = sqlSession.update("hitCount",bm_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	public int getBmno() {
 		int bm_no = 0;

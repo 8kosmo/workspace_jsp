@@ -1,0 +1,69 @@
+package com.mvc2;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.log4j.Logger;
+
+import com.util.MyBatisCommonFactory;
+import com.vo.BoardMasterVO;
+import com.vo.BoardSubVO;
+
+public class BoardDao {
+	Logger logger = Logger.getLogger(BoardDao.class);
+	SqlSessionFactory sqlSessionFactory = null;
+	public BoardDao() {
+		  sqlSessionFactory =
+				  MyBatisCommonFactory.getSqlSessionFactory();
+	}
+	/***************INSERT***************/
+	public int boardSubAdd(BoardSubVO bsVO) {
+		logger.info("boardSubAdd 호출");
+		return 0;		
+	}
+	public int boardMasterAdd(BoardMasterVO bmVO) {
+		logger.info("boardMasterAdd 호출");
+		return 0;
+	}
+	/***************UPDATE***************/
+	public int boardSubUpd(BoardSubVO bsVO) {
+		logger.info("boardSubUpd 호출");
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public int boardMasterUpd(BoardMasterVO bmVO) {
+		logger.info("boardMasterUpd 호출");
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	/***************DELETE***************/
+	public int boardSubDel(BoardSubVO bsVO) {
+		logger.info("boardSubDel 호출성공");
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public int boardMasterDel(BoardMasterVO bmVO) {
+		logger.info("boardMasterDel 호출성공");
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public int getTotal() {
+		int tot = 0;
+		try {
+			SqlSession sqlSession = sqlSessionFactory.openSession();
+			tot = sqlSession.selectOne("getTotal");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tot;
+	}
+	public int getBmno() {
+		int bm_no = 0;
+		try {
+			SqlSession sqlSession = sqlSessionFactory.openSession();
+			bm_no = sqlSession.selectOne("getTotal");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bm_no;
+	}
+}

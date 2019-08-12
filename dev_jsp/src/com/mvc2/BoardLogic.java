@@ -1,5 +1,6 @@
 package com.mvc2;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +56,23 @@ public class BoardLogic {
 			}
 		}
 		boardList = bDao.boardList(bmVO);
+/*
+ * 클래스 설계시 전체 조회 혹은 조건 검색 그리고 상세조회로 나누어 처리한다.
+ * 전체조회 조건검색, 상세조회 모두 같은 프로세스를 태워도 상관 없으나
+ * 이렇게 처리할 경우 메소드 안에 분기문 처리를 해야 하고 이것은 가독을 떨어뜨리고
+ * 업무에 대한 처리 메소드가 밖으로 드러나지 않게 된다.
+ * 유지 보수 업무에 경우 기존 개발자 보다 적은 개발자가 통합 관리하게 되므로
+ * 유지 보수를 생각 한다면 업무에 따른 메소드 구분이나 클래스 설계시 이러한 부분을 고려하여
+ * 설계하는 것이 기본이다.
+ * 여기서도 3가지가 모두 비슷한 업무이지만 Logic과 Dao는 공유하되 Controller는 분리시킴으로써
+ * 응답화면을 분리하여 관리하도록 설계하였다.
+ */
+		//size가 1이면 한건 조회가 성공한 경우 이믈 이때만 조회수를 카운트 하여 처리한다.
+		//결함 - 만일 조건 검색으로 인한 결과가 똑같이 한 건일때는 어떻게 분리해야 할까요?
+		if(boardList.size()==1 && "detail".equals(bmVO.getGubun())) {
+			int bm_no = bmVO.getBm_no();
+			bDao.hitCount(bm_no);
+		}
 		return boardList;
 	}
 	public int boardAdd(Map<String, Object> pMap){
@@ -110,7 +128,7 @@ public class BoardLogic {
 		BoardMasterVO bmVO = new BoardMasterVO();
 		BoardSubVO bsVO = new BoardSubVO();
 		//첨부파일이 있을 때
-		sresult = bDao.boardSubUpd(bsVO);
+		sresult = bDao.boardSubDel(bsVO);
 		//첨부파일이 없을 때
 		
 		//공통 처리부분
@@ -122,14 +140,32 @@ public class BoardLogic {
 		int result = 0;
 		int mresult = 0;
 		int sresult = 0;
+		String filePath = "D:\\workspace_jsp\\dev_jsp\\WebContent\\pds\\";
+		//file객체 생성시 경로정보가 필수 이므로
+		String filename = null;
 		BoardMasterVO bmVO = new BoardMasterVO();
 		BoardSubVO bsVO = new BoardSubVO();
+		if(pMap.get("bm_no")!=null) {
+			bsVO.setBm_no(Integer.parseInt(pMap.get("bm_no").toString()));
+			bsVO.setBs_seq(1);
+			bmVO.setBm_no(Integer.parseInt(pMap.get("bm_no").toString()));
+		}
 		//첨부파일이 있을 때
-		sresult = bDao.boardSubDel(bsVO);
+		if(pMap.get("bs_file")!=null && pMap.get("bs_file").toString().length()>1) {
+			filename = pMap.get("bs_file").toString();
+			String fullPath = filePath+filename;
+			File file = new File(fullPath);
+			if(file.exists()) {//그 파일이 서버에 존재하니?
+				boolean isOk = file.delete();
+				logger.info("삭제유무: "+isOk);
+				int ibm_no = 0;
+				sresult = bDao.boardSubDel(bsVO);
+			}
+		}
 		//첨부파일이 없을 때
 		
 		//공통 처리부분
 		mresult = bDao.boardMasterDel(bmVO);
-		return result;
+		return mresult;
 	}
 }

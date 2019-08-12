@@ -107,6 +107,7 @@ public class BoardController implements Controller {
 			if(req.getParameter("bm_no")!=null) {
 				bmVO.setBm_no(Integer.parseInt(req.getParameter("bm_no")));				
 			}
+			bmVO.setGubun("detail");
 			boardDetail = bLogic.boardList(bmVO);
 			req.setAttribute("boardDetail", boardDetail);
 			path = "forward:read.jsp";
@@ -146,7 +147,11 @@ public class BoardController implements Controller {
 			hmb.bind(pMap);
 			int result = 0;
 			result = bLogic.boardDel(pMap);
-			path = "forward:boardList.jsp";
+			if(result == 1) {
+				path = "redirect:/board/test.mo?crud=boardList";
+			}else {
+				path = "redirect:/board/boardAddFail.jsp";
+			}
 		}
 		//return null;//NullPointerException
 		//return "";//ArrayIndexOutofBoundException

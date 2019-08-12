@@ -2,6 +2,11 @@
 <!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.BoardMapper">
 <!-- 	<resultMap id="mVO" type="com.vo.MemberVO"/>	 -->
+	<update id="hitCount" parameterType="int"><!-- 원시타입int를 사용할 경우 쿼리문에 변수 사용 못함 -->
+		update board_master_t
+		   set bm_hit = bm_hit+1
+		 where bm_no = #{value}
+	</update>
 	<select id="getTotal" parameterType="com.vo.BoardMasterVO" resultType="int">
 		select count(bm.bm_no)
           from board_master_t bm,board_sub_t bs

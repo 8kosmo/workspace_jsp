@@ -1,0 +1,19 @@
+package com.mvc3;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+
+public class SNSLogic {
+	Logger logger = Logger.getLogger(SNSLogic.class);
+	SNSDao snsDao = null;
+	public SNSLogic() {
+		snsDao = new SNSDao();
+	}
+	public List<Map<String, Object>> smsgList() {
+		logger.info("SNSLogic||smsgList 호출성공");
+		List<Map<String, Object>> smsgList = null;
+		return null;
+	}
+}

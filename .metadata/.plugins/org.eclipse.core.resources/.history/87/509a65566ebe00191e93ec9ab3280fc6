@@ -1,0 +1,28 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	List<Map<String,Object>> list =
+	(List<Map<String,Object>>)request.getAttribute("list");
+	if(list != null){
+		out.print("list ==> "+list.size());
+		for(int i=0;i<list.size();i++){
+			Map<String,Object> rMap = list.get(i);
+			Object keys[] = rMap.keySet().toArray();
+			for(int j=0;j<keys.length;j++){
+				out.print(rMap.get(keys[j]));
+			}
+		}
+	}
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>SNS TEST PAGE</h3>
+</body>
+</html>

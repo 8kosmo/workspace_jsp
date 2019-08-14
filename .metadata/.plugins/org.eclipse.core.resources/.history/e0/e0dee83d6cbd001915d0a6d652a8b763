@@ -1,0 +1,15 @@
+package com.mvc3;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class SNSController implements ControllerVer3 {
+
+	@Override
+	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		return null;
+	}
+
+}

@@ -1,0 +1,10 @@
+package com.mvc3;
+
+import javax.servlet.http.HttpServlet;
+
+import org.apache.log4j.Logger;
+
+public class ActionServletVer3 extends HttpServlet {
+	Logger logger = Logger.getLogger(ActionServletVer3.class);
+	
+}

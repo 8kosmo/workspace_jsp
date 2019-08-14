@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import com.mvc3.ModelAndView;
 import com.vo.MemberVO;
 
 public class Member2Controller implements Controller {

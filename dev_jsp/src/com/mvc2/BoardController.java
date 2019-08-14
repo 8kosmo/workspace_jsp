@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import com.mvc3.ModelAndView;
 import com.util.HashMapBinder;
 import com.vo.BoardMasterVO;
 
@@ -31,6 +32,7 @@ public class BoardController implements Controller {
 	 * ->ActionServlet경유하라.
 	 */
 	public BoardController(String requestName, String crud) {
+		logger.info("BoardController||생성자 호출성공");
 		this.requestName = requestName;
 		this.crud = crud;
 		bLogic = new BoardLogic();
@@ -46,7 +48,19 @@ public class BoardController implements Controller {
 		logger.info("총 레코드 수: "+session.getAttribute("s_tot"));
 		//조회시 검색 조건에 해당하는 값을 담는 변수
 		BoardMasterVO bmVO = new BoardMasterVO();
-		if("boardView".equals(crud)) {
+		/***************************************************************
+		 * Mybitis에서 트랜잭션처리 실습코드
+		 * 테스트 시나리오
+		 * BoardController에서 테스트하므로 폴더명은 반드시 board폴더에 넣는다.
+		 * crud=tr로 처리해야 tansactionTest메소드 호출가능
+		 * http://192.168.0.22:1521/board/test.mo?crud=tr
+		 ***************************************************************/
+		if("tr".equals(crud)) {
+			String msg = bLogic.tansactionTest();
+			req.setAttribute("msg", msg);
+			path = "forward:testResult.jsp";
+		}
+		else if("boardView".equals(crud)) {
 			path = "redirect:boardList.jsp";
 		}
 		/*
@@ -112,6 +126,19 @@ public class BoardController implements Controller {
 			req.setAttribute("boardDetail", boardDetail);
 			path = "forward:read.jsp";
 		}
+		else if("updateForm".equals(crud))
+		{
+			logger.info("crud=updateForm");
+			List<Map<String, Object>> updateForm = null;
+			bmVO = null;
+			bmVO = new BoardMasterVO();
+			if(req.getParameter("bm_no")!=null) {
+				bmVO.setBm_no(Integer.parseInt(req.getParameter("bm_no")));				
+			}
+			updateForm = bLogic.boardList(bmVO);
+			req.setAttribute("updateForm", updateForm);
+			path = "forward:updateForm.jsp";
+		}
 		else if("boardAdd".equals(crud))
 		{
 			logger.info("crud=boardAdd일 경우");
@@ -132,12 +159,23 @@ public class BoardController implements Controller {
 		else if("boardUpd".equals(crud))
 		{
 			logger.info("crud=boardUpd일 경우");
+			int result = 0;
 			Map<String, Object> pMap = new HashMap<>();
 			HashMapBinder hmb = new HashMapBinder(req);
 			hmb.bind(pMap);
-			int result = 0;
 			result = bLogic.boardUpd(pMap);
-			path = "forward:boardList.jsp";
+/*
+ * 입력일때는 dialog로 처리하였으므로 부모창에 변경된 페이지가 직접 적용이됨.
+ * 수정일때는 window.open() 팝업창을 새로 열었을 경우 수정에 대한 action을
+ * 태운 후에 xxx.mo 액션을 요청하더라도 자식창에 반영될 페이지가
+ * 닫히게 되어서 사용자가 화면을 볼 수 없다.
+ * 결함 - 페이지 이동처리에 대한 flow chart에 따라 적절하게 팝업창을 관리해야함.
+ */
+			if(result == 1) {
+				path = "redirect:/board/test.mo?crud=boardList";
+			}else {
+				path = "redirect:/board/boardAddFail.jsp";
+			}
 		}
 		else if("boardDel".equals(crud))
 		{

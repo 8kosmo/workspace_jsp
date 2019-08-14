@@ -1,0 +1,34 @@
+package com.mvc3;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.log4j.Logger;
+
+import com.util.MyBatisCommonFactory;
+import com.vo.SNSMessageSet;
+
+public class SNSDao {
+	Logger logger = Logger.getLogger(SNSDao.class);
+	//MyBatis연결시 커넥션을 맺는데 필요한 정보를 읽기
+	SqlSessionFactory sqlSessionFactory = null;
+	SqlSession sqlSession = null;
+	public SNSDao() {
+		sqlSessionFactory = MyBatisCommonFactory.getSqlSessionFactory();
+	}
+	public List<SNSMessageSet> smsgList() {
+		List<SNSMessageSet> smsgList = new ArrayList<SNSMessageSet>;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			smsgList = sqlSession.selectList("smsgList");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(sqlSession!=null)sqlSession.close();
+		}
+		return smsgList;
+	}
+}

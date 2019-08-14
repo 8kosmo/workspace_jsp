@@ -1,0 +1,22 @@
+package com.mvc3;
+
+public class ControllerMappingVer3 {
+	static String crud = "";
+	/**
+	 * 
+	 * @param command
+	 * @param crud
+	 * @return
+	 */
+	public static ControllerVer3 getController(String command, String crud) {
+		ControllerMappingVer3.crud = crud;
+		ControllerVer3 controller3 = null;
+		String commands[] = command.split("/");
+		String work = commands[0];
+		String requestName = commands[1];
+		if("sns".equals(work)) {
+			controller3 = new SNSController(requestName,ControllerMappingVer3.crud);
+		}
+		return controller3;
+	}
+}

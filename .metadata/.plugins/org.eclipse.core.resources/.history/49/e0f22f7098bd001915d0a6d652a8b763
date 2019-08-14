@@ -1,0 +1,8 @@
+package com.vo;
+
+import java.util.List;
+
+public class SNSMessageSet {
+	private SNSMessageVO msgVO = null;
+	private List<SNSRepleVO> reList = null;
+}

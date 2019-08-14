@@ -1,0 +1,61 @@
+package com.mvc3;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.log4j.Logger;
+
+import com.util.MyBatisCommonFactory;
+import com.vo.SNSMessageSet;
+import com.vo.SNSMessageVO;
+import com.vo.SNSRepleVO;
+
+public class SNSDao {
+	Logger logger = Logger.getLogger(SNSDao.class);
+	//MyBatis연결시 커넥션을 맺는데 필요한 정보를 읽기
+	SqlSessionFactory sqlSessionFactory = null;
+	SqlSession sqlSession = null;
+	public SNSDao() {
+		sqlSessionFactory = MyBatisCommonFactory.getSqlSessionFactory();
+	}
+	public List<SNSMessageSet> smsgList() {
+		//상태글에 대한 댓글 묶음 처리
+		List<SNSMessageSet> smsgList = new ArrayList<>();
+		//상태글 정보를 담기
+		List<SNSMessageVO> msgList = new ArrayList<>();
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			msgList = sqlSession.selectList("msgList");
+			if(msgList.size()>0) {
+				for(int i=0;i<msgList.size();i++) {
+					SNSMessageSet smSet = new SNSMessageSet();
+					SNSMessageVO smVO = msgList.get(i);
+					int mno = smVO.getMno();
+					List<SNSRepleVO> reList = getReple(mno);
+					smSet.setMsgVO(smVO);
+					smSet.setReList(reList);
+					smsgList.add(smSet);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(sqlSession!=null)sqlSession.close();
+		}
+		return smsgList;
+	}
+	private List<SNSRepleVO> getReple(int mno) {
+		List<SNSRepleVO> repleList = new ArrayList<>();
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			repleList = sqlSession.selectList("getReple", mno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(sqlSession!=null)sqlSession.close();
+		}
+		return repleList;
+	}
+}

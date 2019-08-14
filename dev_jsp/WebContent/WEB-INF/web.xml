@@ -17,7 +17,17 @@ web.xml은 배치서술자 파일로써 서버가 기동할 때 먼저 스캔이
 	<param-name>log4jConfigLocation</param-name>
 	<param-value>/WEB-INF/classes/log4j.properties</param-value>
 	</context-param>
-		<servlet>
+	
+	<servlet>
+		<servlet-name>POJO_MVC3</servlet-name>
+		<servlet-class>com.mvc3.ActionServletVer3</servlet-class>	
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>POJO_MVC3</servlet-name>
+		<url-pattern>*.mvc</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>POJO_MVC2</servlet-name>
 		<servlet-class>com.mvc2.ActionServlet</servlet-class>	
 	</servlet>
@@ -25,6 +35,7 @@ web.xml은 배치서술자 파일로써 서버가 기동할 때 먼저 스캔이
 		<servlet-name>POJO_MVC2</servlet-name>
 		<url-pattern>*.mo</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>POJO_MVC1</servlet-name>
 		<servlet-class>com.mvc1.FrontController</servlet-class>	

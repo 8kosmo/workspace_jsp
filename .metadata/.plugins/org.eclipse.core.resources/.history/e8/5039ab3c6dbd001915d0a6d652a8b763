@@ -1,0 +1,14 @@
+package com.mvc3;
+
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.log4j.Logger;
+
+import com.util.MyBatisCommonFactory;
+
+public class SNSDao {
+	Logger logger = Logger.getLogger(SNSDao.class);
+	SqlSessionFactory sqlSessionFactory = null;
+	public SNSDao() {
+		SqlSessionFactory = MyBatisCommonFactory.getSqlSessionFactory();
+	}
+}

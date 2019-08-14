@@ -1,0 +1,26 @@
+package com.mvc3;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+
+public class SNSController implements ControllerVer3 {
+	Logger logger = Logger.getLogger(SNSController.class);
+	String requestName = null;
+	String crud = null;
+	SNSLogic snsLogic = null;
+	public SNSController() {
+		this.requestName = requestName;
+		this.crud = crud;
+		snsLogic = new SNSLogic();
+	}
+	@Override
+	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		logger.info("SNSController||ModelAndView execute 호출성공");
+		ModelAndView mav = new ModelAndView();
+		
+		return null;
+	}
+
+}

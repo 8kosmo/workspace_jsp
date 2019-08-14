@@ -35,7 +35,7 @@
 	}
 	/***수정***/
 	function updateForm(){
-		
+		common_window_popup('/board/test.mo?crud=updateForm&bm_no=<%=rMap.get("BM_NO")%>', '700', '400', 'updateForm');
 	}
 	/***삭제***/
 	function deleteForm(){
@@ -55,10 +55,10 @@
     }
 	//삭제 처리 화면에서 확인 버튼을 클릭했을 때
 	function boardDel(){
-		var db_pw = <%=rMap.get("BM_PW")%>;
+		var db_pw = "<%=rMap.get("BM_PW")%>";
 		//현재 내가 위치하는 페이지와 비번 입력받는 화면이 다르다. 접근이 가능한가?
 		var u_pw = $("#u_pw").textbox('getValue');
-		alert(db_pw+", "+u_pw);
+		//alert(db_pw+", "+u_pw);
 		/* 
 		사용자가 입력한 비번과 DB에서 읽어들인 비번을 비교하여 일치하면 삭제 처리 진행
 		불일치시 비번을 다시 입력받도록 한다.

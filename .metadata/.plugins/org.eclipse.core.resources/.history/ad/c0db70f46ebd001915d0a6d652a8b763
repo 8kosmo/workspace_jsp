@@ -1,0 +1,9 @@
+package com.vo;
+
+public class SNSRepleVO {
+	  private int	 rno       = 0 ;
+	  private String mem_id    = "";
+	  private String msg       = "";
+	  private String msg_date  = "";
+	  private int	 mno       = 0 ;
+}

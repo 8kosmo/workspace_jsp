@@ -1,0 +1,7 @@
+package com.mvc3;
+
+import org.apache.log4j.Logger;
+
+public class SNSDao {
+	Logger logger = Logger.getLogger(SNSDao.class);
+}

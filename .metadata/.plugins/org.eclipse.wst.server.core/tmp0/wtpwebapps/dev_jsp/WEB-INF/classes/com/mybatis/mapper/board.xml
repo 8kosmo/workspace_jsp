@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.BoardMapper">
-<!-- 	<resultMap id="mVO" type="com.vo.MemberVO"/>	 -->
+<!-- 트랜잭션 처리 실습 코드 -->
+	<insert id="depInsert" parameterType="map">
+		insert into dept values(#{deptno},#{dname},#{loc})
+	</insert>
+	<insert id="empInsert" parameterType="map">
+		insert into emp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+				 values(#{empno},#{ename},#{job},#{mgr}
+				 	   ,to_char(sysdate,'YYYY-MM-DD'),#{sal},#{comm},#{deptno})
+	</insert>
 	<update id="hitCount" parameterType="int"><!-- 원시타입int를 사용할 경우 쿼리문에 변수 사용 못함 -->
 		update board_master_t
 		   set bm_hit = bm_hit+1

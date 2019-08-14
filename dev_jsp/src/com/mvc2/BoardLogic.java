@@ -124,14 +124,13 @@ public class BoardLogic {
 	public int boardUpd(Map<String, Object> pMap) {
 		logger.info("boardUpd 호출");
 		int mresult = 0;
-		int sresult = 0;
 		BoardMasterVO bmVO = new BoardMasterVO();
-		BoardSubVO bsVO = new BoardSubVO();
-		//첨부파일이 있을 때
-		sresult = bDao.boardSubDel(bsVO);
-		//첨부파일이 없을 때
-		
-		//공통 처리부분
+		bmVO.setBm_no(Integer.parseInt(pMap.get("bm_no").toString()));
+		bmVO.setBm_title(pMap.get("bm_title").toString());
+		bmVO.setBm_writer(pMap.get("bm_writer").toString());
+		bmVO.setBm_content(pMap.get("bm_content").toString());
+		bmVO.setBm_pw(pMap.get("bm_pw").toString());
+		bmVO.setBm_email(pMap.get("bm_email").toString());
 		mresult = bDao.boardMasterUpd(bmVO);
 		return mresult;
 	}
@@ -167,5 +166,10 @@ public class BoardLogic {
 		//공통 처리부분
 		mresult = bDao.boardMasterDel(bmVO);
 		return mresult;
+	}
+	public String tansactionTest() {
+		String msg = null;
+		msg = bDao.tansactionTest();
+		return msg;
 	}
 }

@@ -1,0 +1,26 @@
+package com.mvc3;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+
+public class ActionServletVer3 extends HttpServlet {
+	Logger logger = Logger.getLogger(ActionServletVer3.class);
+	private void doService(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void doGet(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException{
+		doService(req,res);
+	}
+	public void doPost(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException{
+		doService(req,res);
+	}
+}

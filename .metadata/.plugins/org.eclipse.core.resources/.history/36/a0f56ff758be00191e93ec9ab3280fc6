@@ -1,0 +1,204 @@
+package com.mvc2;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
+
+import com.mvc3.ModelAndView;
+import com.util.HashMapBinder;
+import com.vo.BoardMasterVO;
+
+public class BoardController implements Controller {
+	Logger logger = Logger.getLogger(BoardController.class);
+	String path = null;
+	String requestName = null;
+	String crud = null;
+	BoardLogic bLogic = null; 
+	int tot = 0;
+	/*
+	 * 현재 게시판 목록을 조회할 때 boardList.jsp를 호출하였다.
+	 * 이렇게 호출하면 ActionServlet을 경유하지 않는 것이다. - 세션값이 없다.
+	 * 그럼 어떻게 경유하도록 할 것인가? test.mo -> boardList.jsp
+	 * 위와 같이 하면 객체 주입이 일어난다. (생성자 호출이 일어남)
+	 * 생성자 안에서 전체 레코드를 가져 오자. ->세션 미리 담기
+	 * 생정자 안에는 req가 없다. 그래서 excute(req,res)에서 session값을 담는다.
+	 * 페이지 요청을 표준 서블릿으로 처리를 받아서는 세션값에 사용이 불가함.
+	 * ->ActionServlet경유하라.
+	 */
+	public BoardController(String requestName, String crud) {
+		logger.info("BoardController||생성자 호출성공");
+		this.requestName = requestName;
+		this.crud = crud;
+		bLogic = new BoardLogic();
+		BoardMasterVO bmVO = new BoardMasterVO();
+		tot = bLogic.getTot(bmVO);
+	}
+
+	@Override
+	public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		logger.info("BoardController || execute(req,res) 호출");
+		HttpSession session = req.getSession();
+		session.setAttribute("s_tot", tot);//tot는 생성자에서 처리
+		logger.info("총 레코드 수: "+session.getAttribute("s_tot"));
+		//조회시 검색 조건에 해당하는 값을 담는 변수
+		BoardMasterVO bmVO = new BoardMasterVO();
+		/***************************************************************
+		 * Mybitis에서 트랜잭션처리 실습코드
+		 * 테스트 시나리오
+		 * BoardController에서 테스트하므로 폴더명은 반드시 board폴더에 넣는다.
+		 * crud=tr로 처리해야 tansactionTest메소드 호출가능
+		 ***************************************************************/
+		if("tr".equals(crud)) {
+			String msg = bLogic.tansactionTest();
+			req.setAttribute("msg", msg);
+			path = "forward:testResult.jsp";
+		}
+		else if("boardView".equals(crud)) {
+			path = "redirect:boardList.jsp";
+		}
+		/*
+		 * 아래 조건은 전체 레코드수가 아닌 검색결과에 대한 레코드 수를 채번하기 위한 코드임.
+		 * 주의:pageSize나 pageNumber를 넘기게 되면 tot값에 영향을 주는 인자니까
+		 * 		배제함.
+		 */
+		else if("total".equals(crud)) {
+			//콤보박스에서 선택한 value값이 담김 - bm_title, bm_content, bm_writer
+			String cb_search = req.getParameter("cb_search");
+			logger.info("cb_search: "+cb_search);
+			bmVO.setCb_search(cb_search);
+			//사용자가 입력한 문자열
+			String keyword = req.getParameter("keyword");
+			logger.info("keyword: "+keyword);
+			bmVO.setKeyword(keyword);
+			tot = bLogic.getTot(bmVO);
+			req.setAttribute("rtot", tot);
+			path = "forward:jsonTotal.jsp";
+		}
+		else if("boardList".equals(crud))
+		{
+			logger.info("crud=boardList일 경우");
+			List<Map<String, Object>> boardList = null;
+			//페이지처리 초기값 담기
+			int pageNumber = 0;
+			int pageSize   = 0;
+			if(req.getParameter("pageNumber")!=null) {
+				pageNumber = Integer.parseInt(req.getParameter("pageNumber"));
+			}
+			if(req.getParameter("pageSize")!=null) {
+				pageSize = Integer.parseInt(req.getParameter("pageSize"));
+			}
+			bmVO.setPageNumber(pageNumber);
+			bmVO.setPageSize(pageSize);
+			logger.info("pageNumber: "+pageNumber+", pageSize: "+pageSize);
+			boardList =	bLogic.boardList(bmVO);
+			req.setAttribute("boardList", boardList);
+			//아래는 json포맷으로 값을 넘겨서 목록처리하는 코드
+//			path = "forward:jsonBoardList.jsp";
+			//아래는 json을 사용하지 않고 스크립트 요소로 처리하는 코드
+			//댓글처리에 대한 차수 정렬과 끼어드는 글에 대한 상수값들과 변화를 관찰해서
+			//기존에 설계한 값들에 유효성 체크를 하기 위함.
+			path = "forward:boardListVer2.jsp";
+		}
+		else if("boardDetail".equals(crud))
+		{
+			logger.info("crud=boardDetail일 경우");
+			/*
+			 * 전체조회 혹은 조건조회와 같은 로직을 타도 되지만 응답이 나가는 페이지가
+			 * 다르므로 로직과 Dao는 같이 사용하고 컨트롤계층만 따로 분리하였다.
+			 * if문을 사용해서 같은 로직을 태워도 되겠지만 유지보수를 생각했을 때
+			 * 1:1로 대응하는 방법이 유리하기 때문에 컨트롤계층만 분리함. 
+			 */
+			List<Map<String, Object>> boardDetail = null;
+			bmVO = null;
+			bmVO = new BoardMasterVO();
+			if(req.getParameter("bm_no")!=null) {
+				bmVO.setBm_no(Integer.parseInt(req.getParameter("bm_no")));				
+			}
+			bmVO.setGubun("detail");
+			boardDetail = bLogic.boardList(bmVO);
+			req.setAttribute("boardDetail", boardDetail);
+			path = "forward:read.jsp";
+		}
+		else if("updateForm".equals(crud))
+		{
+			logger.info("crud=updateForm");
+			List<Map<String, Object>> updateForm = null;
+			bmVO = null;
+			bmVO = new BoardMasterVO();
+			if(req.getParameter("bm_no")!=null) {
+				bmVO.setBm_no(Integer.parseInt(req.getParameter("bm_no")));				
+			}
+			updateForm = bLogic.boardList(bmVO);
+			req.setAttribute("updateForm", updateForm);
+			path = "forward:updateForm.jsp";
+		}
+		else if("boardAdd".equals(crud))
+		{
+			logger.info("crud=boardAdd일 경우");
+			int result = 0;
+			Map<String, Object> pMap = new HashMap<>();
+			HashMapBinder hmb = new HashMapBinder(req);
+			hmb.multiBind(pMap);
+			//hmb.bindPost(pMap);
+			logger.info("제목: "+pMap.get("bm_title"));
+			logger.info("내용: "+pMap.get("bm_content"));
+			result = bLogic.boardAdd(pMap);
+			if(result == 1) {
+				path = "redirect:/board/test.mo?crud=boardList";
+			}else {
+				path = "redirect:/board/boardAddFail.jsp";
+			}
+		}
+		else if("boardUpd".equals(crud))
+		{
+			logger.info("crud=boardUpd일 경우");
+			int result = 0;
+			Map<String, Object> pMap = new HashMap<>();
+			HashMapBinder hmb = new HashMapBinder(req);
+			hmb.bind(pMap);
+			result = bLogic.boardUpd(pMap);
+/*
+ * 입력일때는 dialog로 처리하였으므로 부모창에 변경된 페이지가 직접 적용이됨.
+ * 수정일때는 window.open() 팝업창을 새로 열었을 경우 수정에 대한 action을
+ * 태운 후에 xxx.mo 액션을 요청하더라도 자식창에 반영될 페이지가
+ * 닫히게 되어서 사용자가 화면을 볼 수 없다.
+ * 결함 - 페이지 이동처리에 대한 flow chart에 따라 적절하게 팝업창을 관리해야함.
+ */
+			if(result == 1) {
+				path = "redirect:/board/test.mo?crud=boardList";
+			}else {
+				path = "redirect:/board/boardAddFail.jsp";
+			}
+		}
+		else if("boardDel".equals(crud))
+		{
+			logger.info("crud=boardDel일 경우");
+			Map<String, Object> pMap = new HashMap<>();
+			HashMapBinder hmb = new HashMapBinder(req);
+			hmb.bind(pMap);
+			int result = 0;
+			result = bLogic.boardDel(pMap);
+			if(result == 1) {
+				path = "redirect:/board/test.mo?crud=boardList";
+			}else {
+				path = "redirect:/board/boardAddFail.jsp";
+			}
+		}
+		//return null;//NullPointerException
+		//return "";//ArrayIndexOutofBoundException
+		return path;
+	}
+
+	@Override
+	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res, String crud) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

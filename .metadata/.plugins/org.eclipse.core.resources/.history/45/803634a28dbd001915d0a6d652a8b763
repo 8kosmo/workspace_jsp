@@ -1,0 +1,21 @@
+package com.mvc3;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class ModelAndView {
+	HttpServletRequest req = null;
+	HttpServletResponse res = null;
+	String viewName = null;
+	List<Map<String, Object>> reqList = new ArrayList<>();
+	public ModelAndView() {
+	}
+	public ModelAndView(HttpServletRequest req, HttpServletResponse res) {
+		this.req = req;
+		this.res = res;
+	}
+}

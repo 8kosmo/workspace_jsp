@@ -50,7 +50,7 @@
 	}
 	function boardDetail(p_bmno){
 		//common_window_popup("test.mo?crud=boardDetail&bm_no="+p_bmno,"900","650","read");
-		location.href="test.mo?crud=boardDetail&bm_no="+p_bmno;
+		location.href="/board/test.mo?crud=boardDetail&bm_no="+p_bmno;
 	}
 	function addAction() {
 		$("#f_boardAdd").attr("method","post");

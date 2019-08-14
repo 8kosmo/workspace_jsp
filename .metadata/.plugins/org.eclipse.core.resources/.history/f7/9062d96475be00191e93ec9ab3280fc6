@@ -1,0 +1,34 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.List, com.vo.SNSMessageVO, com.vo.SNSMessageSet, com.vo.SNSRepleVO" %>
+<%
+	List<SNSMessageSet> msgList = null;
+	msgList = (List<SNSMessageSet>)request.getAttribute("smsgList");
+	int size = 0;
+	if(msgList!=null)
+		size = msgList.size();
+%>
+<div class="card bg-primary text-white">
+<%
+	for(int i=0;i<size;i++){
+		SNSMessageSet smSet = msgList.get(i);
+		SNSMessageVO smVO = smSet.getMsgVO();
+		List<SNSRepleVO> reList = smSet.getReList();
+		int rsize = 0;
+		if(reList!=null){
+			rsize = reList.size();
+		}
+%>
+	<div class="card-header"><%=smSet.getMsgVO().getMsg() %></div>
+<%
+		if(rsize>0){
+			for(int j=0;j<rsize;j++){
+				SNSRepleVO srVO = reList.get(j);
+%>
+	<div class="card-body">Content</div>
+<%
+			}//end of inner for
+		}
+	}//end of outter for
+%>
+</div>

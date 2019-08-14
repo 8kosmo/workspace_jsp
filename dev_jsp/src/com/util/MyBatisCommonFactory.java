@@ -17,6 +17,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
  * 왜냐하면 그 안에 서버에 관련된 드라이버 클래스와 서버 정보 및 계정 정보가 있기 때문
  */
 public class MyBatisCommonFactory {
+	//static 한번  생성하면 계속 재사용가능하다. = 죽지않는다 = application scope
 	private static SqlSessionFactory sqlSessionFactory = null;
 	
 	public static void init() {

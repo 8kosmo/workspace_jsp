@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.List, com.vo.SNSMessageVO, com.vo.SNSMessageSet, com.vo.SNSRepleVO" %>
+<%
+	List<SNSMessageSet> msgList = null;
+	msgList = (List<SNSMessageSet>)request.getAttribute("smsgList");
+	int size = 0;
+	if(msgList!=null)
+		size = msgList.size();
+%>
+<div class="card bg-primary text-white">
+<%
+	for(int i=0;i<size;i++){
+%>
+	<div class="card-header">Header</div>
+	<div class="card-body">Content</div>
+<%
+	}
+%>
+</div>
